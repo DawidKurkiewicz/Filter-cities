@@ -25,11 +25,19 @@ searchInput.addEventListener("keyup", displayMatches)
         const regex = new RegExp(this.value,"gi");
         const cityName = place.city.replace(regex,`<span class="highlight">${this.value}</span>`)
         const stateName = place.state.replace(regex,`<span class="highlight">${this.value}</span>`)
-        return `
+        if(place.population==""){
+            return  `
+            <li>
+            <span class="name">${cityName}, ${stateName}</span>
+            <span class="population">Population: unknown</span>
+            </li>`
+        } else {
+            return `
         <li>
         <span class="name">${cityName}, ${stateName}</span>
-        <span class="population">${numberWithCommas(place.population)}</span>
+        <span class="population">Population:${numberWithCommas(place.population)}</span>
         </li>`
+        }
     }).join("")
     suggestions.innerHTML = html
     if(searchInput.value ==""){
